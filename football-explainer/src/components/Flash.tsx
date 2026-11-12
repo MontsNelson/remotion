@@ -19,13 +19,13 @@ export const Flash: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const center = toPx(where, layout);
+  const centre = toPx(where, layout);
 
   return (
     <FrameSvg>
       <circle
-        cx={center.x}
-        cy={center.y}
+        cx={centre.x}
+        cy={centre.y}
         r={metresToPx(1 + 14 * progress, layout)}
         fill="none"
         stroke="#FFFFFF"
@@ -33,8 +33,8 @@ export const Flash: React.FC = () => {
         opacity={1 - progress}
       />
       <circle
-        cx={center.x}
-        cy={center.y}
+        cx={centre.x}
+        cy={centre.y}
         r={metresToPx(1 + 6 * progress, layout)}
         fill="#FFFFFF"
         opacity={0.6 * (1 - progress)}

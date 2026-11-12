@@ -6,7 +6,7 @@
  *   3. Text overlays on their own Sequences: the hook headline, one caption
  *      per phase, and the outro. These stay OUTSIDE the camera so they are
  *      always sharp and inside the Reels safe zones.
- *   4. Optional music.
+ *   4. The voiceover and optional music.
  *
  * Timing comes from scene.ts (seconds) and is converted to frames here.
  */
@@ -34,6 +34,7 @@ import { Caption } from "./components/Caption";
 import { Headline } from "./components/Headline";
 import { Outro } from "./components/Outro";
 import { Music } from "./components/Music";
+import { Voiceover } from "./components/Voiceover";
 
 /** The pitch fades in behind the hook headline. */
 const PitchFadeIn: React.FC<{ readonly children: React.ReactNode }> = ({
@@ -166,6 +167,7 @@ export const TacticsReel: React.FC = () => {
         />
       </Sequence>
 
+      <Voiceover />
       <Music />
     </AbsoluteFill>
   );

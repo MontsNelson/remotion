@@ -28,12 +28,37 @@ terminal and Remotion Studio shows every change live.
 7. **Camera.** `camera` keyframes: `zoom` (1 = whole pitch), `cx`/`cy`
    (the metre point to look at), `tilt` (degrees). Zoom to around 1.5 on
    the area where the action happens.
-8. **Outro.** `outro.handle` is your handle; `outro.question` drives comments.
+8. **Outro.** `outro.handle` is your handle (currently `@FOOTYSMART10`);
+   `outro.question` drives comments.
 
 Coordinates: x 0 to 68 across, y 0 to 105 down. Top goal = Team B's,
 bottom goal = Team A's.
 
-## 2. Check it
+## 2. Re-record the voiceover (edit `src/data/voiceover.json`)
+
+The narration is a separate small file so the voice generator can read it.
+
+1. Write one line per phase. `at` is the second the line starts; keep it
+   just after the phase starts (for example 9.3 for a phase starting at 9).
+2. Write numbers and names the way they should be _said_: "four-three-three",
+   "Footy Smart Ten". Commas add short pauses.
+3. Run the generator:
+
+   ```bash
+   pip install -r scripts/requirements.txt   # once
+   python scripts/voiceover.py
+   ```
+
+   The first run downloads the voice model (about 120 MB) and keeps it in
+   `.voice-model/`. Each run prints every clip's length and warns if a line
+   runs into the next one. If it warns, shorten the text, raise `speed`
+   (1.1 is brisk, 1.2 is fast), or move the next line later.
+
+4. Change the narrator with `voice`. British voices: `bm_george` (default),
+   `bm_fable`, `bm_lewis`, `bm_daniel`, `bf_emma`, `bf_isabella`, `bf_alice`,
+   `bf_lily` (`bm` = male, `bf` = female).
+
+## 3. Check it
 
 ```bash
 npm run stills      # writes out/still-1s.png ... still-25s.png
@@ -42,7 +67,7 @@ npm run stills      # writes out/still-1s.png ... still-25s.png
 Look for: headline fits, captions sit above the bottom 400 px, nothing
 important in the top 250 px, no two circles overlapping at key moments.
 
-## 3. Render
+## 4. Render
 
 ```bash
 npm run render        # out/tactics.mp4       1080x1920 for Reels
@@ -52,19 +77,26 @@ npm run render:feed   # out/tactics-feed.mp4  1080x1350 for the feed
 Each render takes a few minutes on a laptop. The first render downloads a
 headless Chrome once (about 150 MB) unless you already have one.
 
-## 4. Upload
+## 5. Upload
 
 - **Reels:** upload `out/tactics.mp4`. Pick the cover from the hook (first
   second). The caption text and hashtags go in the post, not the video.
 - **Feed:** upload `out/tactics-feed.mp4`.
-- Add music inside Instagram if you want a trending sound. If you prefer
-  baked-in audio, put a royalty-free file at `public/music.mp3`, set
-  `music.enabled: true` in `scene.ts`, and re-render.
+- The voiceover is baked into the MP4. If you add a trending sound inside
+  Instagram, turn its volume down so the narration stays clear.
+- For baked-in background music instead, put a royalty-free file at
+  `public/music.mp3`, set `music.enabled: true` in `scene.ts`, and
+  re-render. It dips automatically under the voiceover.
 
 ## Troubleshooting
 
 - Text looks wrong or a font is missing: run `npm install` again.
 - Video is shorter or longer than expected: check `durationInSeconds` and
   the last phase's `to` value match.
+- No sound: check `voiceover.enabled` is `true` in `scene.ts` and that
+  `public/voiceover/` has a `.wav` for every line `id`.
+- The voiceover is out of sync after you changed the text: run
+  `python scripts/voiceover.py` again; the clips are not re-made
+  automatically.
 - A player jumps: two keyframes have the same `t`, or `moves` are not in
   time order. Keep `t` increasing.

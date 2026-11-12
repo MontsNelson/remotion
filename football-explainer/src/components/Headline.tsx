@@ -10,10 +10,10 @@ import { useLayout } from "../lib/hooks";
 import { anton, inter } from "../lib/fonts";
 import { theme } from "../lib/theme";
 
-const wordColor = (color: HeadlineWord["color"]) =>
-  color === "cyan"
+const wordColour = (colour: HeadlineWord["colour"]) =>
+  colour === "cyan"
     ? theme.cyan
-    : color === "yellow"
+    : colour === "yellow"
       ? theme.yellow
       : theme.text;
 
@@ -91,7 +91,7 @@ export const Headline: React.FC<{
             }}
           >
             {line.map((word, j) => (
-              <span key={j} style={{ color: wordColor(word.color) }}>
+              <span key={j} style={{ color: wordColour(word.colour) }}>
                 {word.text}
                 {j < line.length - 1 ? " " : ""}
               </span>

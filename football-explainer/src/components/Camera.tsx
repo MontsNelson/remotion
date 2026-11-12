@@ -21,7 +21,7 @@ export const Camera: React.FC<{ readonly children: React.ReactNode }> = ({
   const t = useSeconds();
   const cam = cameraAt(scene.camera, t);
   const focus = toPx({ x: cam.cx, y: cam.cy }, layout);
-  const pivot = layout.center;
+  const pivot = layout.centre;
 
   return (
     <AbsoluteFill style={{ perspective: 2200 }}>

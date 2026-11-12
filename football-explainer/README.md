@@ -11,7 +11,8 @@ Two outputs, same animation:
 | `TacticsReel`     | 1080 x 1920 | Instagram Reels, TikTok, Shorts |
 | `TacticsReelFeed` | 1080 x 1350 | Instagram feed (4:5)            |
 
-Both are 30 fps and 30 seconds long.
+Both are 30 fps and 30 seconds long, with a British English voiceover
+explaining each step.
 
 ## Run it
 
@@ -40,11 +41,17 @@ See [GUIDE.md](./GUIDE.md) for the one-page walkthrough.
 ## How the code is organised
 
 ```
+scripts/
+  voiceover.py        Records the narration clips (British English voice)
+  requirements.txt    Python packages for the generator
+public/voiceover/     The recorded narration clips
 src/
   index.ts            Registers the root (Remotion boilerplate)
   Root.tsx            Registers the two compositions (Reel and Feed)
   TacticsReel.tsx     Stacks the layers and times the text overlays
   data/scene.ts       ALL the tactic data. Edit this to change the topic.
+  data/voiceover.json The narration text and when each line starts
+  data/voiceover-timings.json  Clip lengths (written by the generator)
   lib/
     pitch.ts          The one helper that turns metres into pixels
     keyframes.ts      Smooth interpolation between keyframes
@@ -65,6 +72,7 @@ src/
     Headline.tsx      The hook headline and tag pill
     Caption.tsx       Lower-third captions
     Outro.tsx         Follow + question screen
+    Voiceover.tsx     Plays the narration clips at the right moments
     Music.tsx         Optional background music
 ```
 
@@ -72,16 +80,34 @@ Pitch coordinates are in metres on a 105 x 68 pitch. `x` runs across
 (0 = left touchline, 68 = right), `y` runs down (0 = top goal line,
 105 = bottom goal line). Times are in seconds.
 
+## Voiceover
+
+The narration text is in `src/data/voiceover.json`. The audio clips in
+`public/voiceover/` are generated from it, offline, with the free
+[Kokoro](https://github.com/hexgrad/kokoro) text-to-speech model (Apache-2.0)
+in a British English voice:
+
+```bash
+pip install -r scripts/requirements.txt   # once (needs Python 3.10+)
+python scripts/voiceover.py               # re-records every line
+```
+
+The first run downloads the voice model (about 120 MB) from the npm
+registry into `.voice-model/` and checks its checksum. The clips for the
+current tactic are already included, so you only need this when you change
+the narration.
+
 ## Optional music
 
 Put a royalty-free track at `public/music.mp3` and set
-`music.enabled: true` in `src/data/scene.ts`. It plays quietly and fades
-in and out. No music is bundled.
+`music.enabled: true` in `src/data/scene.ts`. It plays quietly, fades
+in and out, and dips under the voiceover. No music is bundled.
 
 ## Packages used
 
 - `remotion` and `@remotion/cli` (the scaffold)
 - `@remotion/google-fonts` for Anton and Inter
+- `@remotion/media` to play the voiceover clips
 
 Nothing else. Arrows, zones and the pitch are plain SVG.
 

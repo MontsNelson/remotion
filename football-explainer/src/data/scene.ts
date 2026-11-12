@@ -90,7 +90,10 @@ export type CameraKeyframe = {
   tilt: number;
 };
 
-export type HeadlineWord = { text: string; color: "white" | "cyan" | "yellow" };
+export type HeadlineWord = {
+  text: string;
+  colour: "white" | "cyan" | "yellow";
+};
 
 // ---------------------------------------------------------------------------
 // THE TACTIC: a 4-3-3 high press trap
@@ -111,9 +114,9 @@ export const scene = {
 
   /** The hook headline. One array per line. Colour key words cyan or yellow. */
   headline: [
-    [{ text: "THE PRESS THAT", color: "white" }],
-    [{ text: "WINS THE BALL", color: "cyan" }],
-    [{ text: "IN 5 SECONDS", color: "yellow" }],
+    [{ text: "THE PRESS THAT", colour: "white" }],
+    [{ text: "WINS THE BALL", colour: "cyan" }],
+    [{ text: "IN 5 SECONDS", colour: "yellow" }],
   ] as HeadlineWord[][],
 
   /** The six phases of the video. Captions are shown as lower-thirds. */
@@ -129,14 +132,27 @@ export const scene = {
   /** Outro screen. */
   outro: {
     follow: "FOLLOW",
-    handle: "@YOURHANDLE",
+    handle: "@FOOTYSMART10",
     question: "Which side would you spring the trap on, left or right?",
     cta: "TELL ME IN THE COMMENTS",
   },
 
   /**
+   * Voiceover. The narration TEXT lives in src/data/voiceover.json, so the
+   * voice generator (scripts/voiceover.py) can read it. After editing that
+   * file, run `python scripts/voiceover.py` to re-record the clips.
+   * Set `enabled` to false for a silent video.
+   */
+  voiceover: {
+    enabled: true,
+    /** 1 = full volume. */
+    volume: 1,
+  },
+
+  /**
    * Optional background music. Put a royalty-free file in public/music.mp3
-   * and flip `enabled` to true. Volume is kept low and fades in and out.
+   * and flip `enabled` to true. Volume is kept low, fades in and out, and
+   * dips further whenever the voiceover is speaking.
    */
   music: {
     enabled: false,

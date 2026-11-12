@@ -21,7 +21,7 @@ export type Layout = {
   /** Where the pitch rectangle sits inside the frame, in pixels. */
   pitch: { left: number; top: number; width: number; height: number };
   /** Centre of the pitch rectangle, in pixels. Used as the camera pivot. */
-  center: { x: number; y: number };
+  centre: { x: number; y: number };
   /** Multiply font sizes by this so text scales with the video width. */
   fontScale: number;
 };
@@ -54,7 +54,7 @@ export const getLayout = (width: number, height: number): Layout => {
     safeBottom,
     scale,
     pitch: { left, top, width: pitchWidth, height: pitchHeight },
-    center: { x: left + pitchWidth / 2, y: top + pitchHeight / 2 },
+    centre: { x: left + pitchWidth / 2, y: top + pitchHeight / 2 },
     fontScale: width / 1080,
   };
 };

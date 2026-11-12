@@ -1,0 +1,36 @@
+{
+  "voice": "bm_george",
+  "speed": 1.1,
+  "lines": [
+    {
+      "id": "hook",
+      "at": 0.25,
+      "text": "The press that wins the ball in five seconds."
+    },
+    {
+      "id": "setup",
+      "at": 3.6,
+      "text": "Team A set up in a four-three-three. Three up top, three in midfield, and a flat back four."
+    },
+    {
+      "id": "trigger",
+      "at": 9.3,
+      "text": "Watch the centre-back. The second he plays it wide to the full-back, that's the trigger."
+    },
+    {
+      "id": "squeeze",
+      "at": 15.3,
+      "text": "Now they squeeze. Every short pass is cut off, and the touchline does the rest."
+    },
+    {
+      "id": "payoff",
+      "at": 21.3,
+      "text": "Ball won! Two quick passes, the striker's through, and it's in the back of the net."
+    },
+    {
+      "id": "outro",
+      "at": 27.05,
+      "text": "Follow, Footy Smart Ten, for more tactics."
+    }
+  ]
+}
