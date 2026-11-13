@@ -15,7 +15,7 @@ export const countdown = {
   durationInSeconds: 23,
 
   /** Your handle, shown on the end card. */
-  handle: "@YOURGTAHANDLE",
+  handle: "@VICECITYCORNER6",
 
   /** Small pill at the top, and a tag beside it. */
   kicker: "GTA 6 COUNTDOWN",

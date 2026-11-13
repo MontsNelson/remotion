@@ -93,12 +93,11 @@ narrator and a fan disclaimer. Changing the day takes two edits
 | Week after          | Two a day: tips, hidden details, best early cars and missions, news recaps                                                                 |
 | Then                | Four a week: news, guides, "10 things you missed"                                                                                          |
 
-**The logo and name.** Your avatar copies the official GTA VI logo style.
-Rockstar can report brand impersonation, and platforms can remove the
-account. Use your own mark instead (for example a palm-and-sunset
-monogram in the same colours) and a name like "Leonida Daily" or
-"Vice Brief", with "Unofficial GTA 6 news" in the bio. Keep the end-card
-disclaimer.
+**The logo and name.** The account is @vicecitycorner6, which avoids
+"GTA" in the name. The avatar still copies the official GTA VI logo style,
+which Rockstar can report as brand impersonation. Use your own mark
+instead (for example a palm-and-sunset monogram in the same colours), with
+"Unofficial GTA 6 news" in the bio. Keep the end-card disclaimer.
 
 **Footage.** Don't re-upload trailers or press artwork. Before launch, use
 the synthwave template. After launch, use your own gameplay captures and
@@ -193,8 +192,8 @@ TikTok and YouTube Studio both have built-in scheduling on desktop.
 - [ ] Your own logo for the GTA channel (see section 4).
 - [ ] Turn on the AI label when posting multiverse videos.
 - [ ] Two-factor login on every account.
-- [ ] Put the handles into the data files (`@YOURGTAHANDLE`,
-      `@YOURMULTIVERSEHANDLE` are placeholders).
+- [x] Handles in the data files: @FOOTYSMART10 and @VICECITYCORNER6.
+- [ ] Multiverse handle (`@YOURMULTIVERSEHANDLE` is still a placeholder).
 
 ## 8. What to measure
 
