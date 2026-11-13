@@ -1,0 +1,18 @@
+{
+  "voice": "af_heart",
+  "speed": 1.1,
+  "outputFolder": "voiceover/multiverse-ep01",
+  "videoLengthSeconds": 19,
+  "lines": [
+    {
+      "id": "hook",
+      "at": 0.2,
+      "text": "What if the world's best boss ran a Premier League dressing room?"
+    },
+    {
+      "id": "outro",
+      "at": 15.6,
+      "text": "Follow for more. Who should we drop in next?"
+    }
+  ]
+}

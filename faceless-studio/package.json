@@ -1,0 +1,42 @@
+{
+  "name": "faceless-studio",
+  "version": "1.0.0",
+  "description": "Three AI-run faceless channels (football tactics, GTA 6 news, multiverse recasts) built with Remotion",
+  "repository": {},
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.543",
+    "@remotion/google-fonts": "4.0.543",
+    "@remotion/media": "4.0.543",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.543"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.543",
+    "@types/react": "19.3.0",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "start": "remotion studio",
+    "dev": "remotion studio",
+    "voiceover": "python scripts/voiceover.py",
+    "render:football": "remotion render src/index.ts TacticsReel out/tactics.mp4 && remotion render src/index.ts TacticsReelFeed out/tactics-feed.mp4",
+    "render:gta": "remotion render src/index.ts GtaCountdown out/gta.mp4 && remotion render src/index.ts GtaCountdownFeed out/gta-feed.mp4",
+    "render:recast": "remotion render src/index.ts RecastReel out/recast.mp4 && remotion render src/index.ts RecastReelFeed out/recast-feed.mp4",
+    "stills": "remotion still src/index.ts TacticsReel out/still-football.png --frame=360 && remotion still src/index.ts GtaCountdown out/still-gta.png --frame=480 && remotion still src/index.ts RecastReel out/still-recast.png --frame=60",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}

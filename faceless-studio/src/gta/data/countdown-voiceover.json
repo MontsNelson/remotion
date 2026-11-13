@@ -1,0 +1,38 @@
+{
+  "voice": "am_fenrir",
+  "speed": 1.2,
+  "outputFolder": "voiceover/gta-countdown",
+  "videoLengthSeconds": 23,
+  "lines": [
+    {
+      "id": "hook",
+      "at": 0.2,
+      "text": "G T A 6 is just six days away."
+    },
+    {
+      "id": "release",
+      "at": 3.2,
+      "text": "It drops Thursday, November nineteenth, on PS5 and Xbox Series X and S."
+    },
+    {
+      "id": "pc",
+      "at": 8.0,
+      "text": "Still no date for PC."
+    },
+    {
+      "id": "map",
+      "at": 9.4,
+      "text": "You're back in Vice City, in the state of Leonida, playing as Jason and Lucia."
+    },
+    {
+      "id": "price",
+      "at": 13.9,
+      "text": "In the US, it's seventy-nine ninety-nine. Ultimate is ninety-nine ninety-nine."
+    },
+    {
+      "id": "outro",
+      "at": 18.8,
+      "text": "Follow for daily G T A 6 news. Day one, or wait for reviews?"
+    }
+  ]
+}
