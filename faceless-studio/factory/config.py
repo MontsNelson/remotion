@@ -59,6 +59,7 @@ ACCOUNTS = {
         "logo": LOGOS / "vicecitycorner_wordmark.png",
         "voice": SETTINGS.get("vice_voice", "am_fenrir"),
         "voice_speed": 1.15,
+        "pace": 1.15,               # whole reel plays this much faster (1 = as built)
         "music": "synthwave",
         "follow_line": "Follow @vicecitycorner6 for daily GTA 6 news",
         "image_credit": "Image: Rockstar Games",
@@ -76,6 +77,7 @@ ACCOUNTS = {
         "logo": LOGOS / "footysmart_wordmark.png",
         "voice": SETTINGS.get("footy_voice", "bm_george"),
         "voice_speed": 1.1,
+        "pace": 1.2,
         "music": "lofi",
         "follow_line": "Follow @footysmart10 for football tactics explained",
         "image_credit": "",

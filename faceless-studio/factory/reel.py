@@ -260,7 +260,7 @@ class Reel:
         proc.stdin.close()
         if proc.wait() != 0:
             raise SystemExit("ffmpeg failed while encoding the video")
-        mux(silent, self.mix, out_mp4)
+        mux(silent, self.mix, out_mp4, pace=self.spec.get("pace", self.acct["pace"]))
         # cover: the hook with its full headline
         first = self.timeline[0]
         self.scene_frame(first[2], first[0], first[1], first[1] - 0.05, first[3]).convert("RGB").save(
@@ -268,14 +268,35 @@ class Reel:
         return {"seconds": self.total, "voice_lines": [s.get("say", "") for s in self.spec["scenes"]]}
 
 
-def mux(video, audio_wav, out_mp4):
-    """Joins picture and sound, normalising loudness to about -14 LUFS."""
+def mux(video, audio_wav, out_mp4, pace=1.0):
+    """Joins picture and sound, normalising loudness to about -14 LUFS.
+    pace > 1 plays the whole video faster (picture and sound together, voice pitch kept),
+    e.g. 1.2 = 20% quicker."""
     out_mp4.parent.mkdir(parents=True, exist_ok=True)
-    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-i", str(audio_wav),
-                        "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-                        "-ar", "48000", "-shortest", "-movflags", "+faststart", str(out_mp4)])
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-i", str(audio_wav)]
+    if abs(pace - 1.0) < 0.001:
+        cmd += ["-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-c:v", "copy"]
+    else:
+        cmd += ["-filter_complex",
+                f"[0:v]setpts=PTS/{pace},fps={FPS}[v];[1:a]atempo={pace},loudnorm=I=-14:TP=-1.5:LRA=11[a]",
+                "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                "-pix_fmt", "yuv420p"]
+    cmd += ["-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest", "-movflags", "+faststart", str(out_mp4)]
+    r = subprocess.run(cmd)
     if r.returncode != 0:
         raise SystemExit("ffmpeg failed while adding the soundtrack")
+
+
+def retime(src, out_mp4, pace):
+    """Speeds up a finished reel (picture and sound together, pitch kept) and re-normalises loudness."""
+    out_mp4.parent.mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-filter_complex",
+                        f"[0:v]setpts=PTS/{pace},fps={FPS}[v];[0:a]atempo={pace},loudnorm=I=-14:TP=-1.5:LRA=11[a]",
+                        "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                        "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+                        "-movflags", "+faststart", str(out_mp4)])
+    if r.returncode != 0:
+        raise SystemExit(f"ffmpeg failed while speeding up {src}")
 
 
 def render(spec: dict, out_dir: Path, work_dir: Path):

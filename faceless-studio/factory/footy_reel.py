@@ -97,7 +97,8 @@ def render(spec: dict, out_dir: Path, work_dir: Path, slug: str, composition="Ta
     out_dir.mkdir(parents=True, exist_ok=True)
     tmp_audio = work_dir / "audio.wav"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw), "-vn", str(tmp_audio)], check=True)
-    mux(raw, tmp_audio, out_dir / "reel.mp4")
+    pace = spec.get("pace", acct["pace"])
+    mux(raw, tmp_audio, out_dir / "reel.mp4", pace=pace)
     if spec.get("feed"):
         raw_feed = work_dir / "raw-feed.mp4"
         r = subprocess.run([_npx(), "remotion", "render", "src/index.ts", "TacticsReelFeed", str(raw_feed),
@@ -106,7 +107,7 @@ def render(spec: dict, out_dir: Path, work_dir: Path, slug: str, composition="Ta
             raise SystemExit("Remotion render (feed version) failed")
         feed_audio = work_dir / "audio-feed.wav"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw_feed), "-vn", str(feed_audio)], check=True)
-        mux(raw_feed, feed_audio, out_dir / "reel-feed.mp4")
+        mux(raw_feed, feed_audio, out_dir / "reel-feed.mp4", pace=pace)
     cover_frame = int(min(2.6, length / 2) * 30)
     subprocess.run([_npx(), "remotion", "still", "src/index.ts", composition, str(out_dir / "cover.jpg"),
                     f"--props={props_path}", f"--frame={cover_frame}", "--image-format=jpeg",
