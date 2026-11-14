@@ -4,7 +4,7 @@
  */
 import type React from "react";
 import { interpolate } from "remotion";
-import { scene } from "../data/scene";
+import { useScene } from "../data/sceneContext";
 import { isMovingAt, kick, pointAt } from "../lib/keyframes";
 import { metresToPx, toPx } from "../lib/pitch";
 import { useLayout, useSeconds } from "../lib/hooks";
@@ -15,6 +15,7 @@ const TRAIL_LENGTH = 6;
 const TRAIL_GAP_SECONDS = 0.045;
 
 export const Ball: React.FC = () => {
+  const scene = useScene();
   const t = useSeconds();
   const layout = useLayout();
   const appearsAt = scene.ball[0].t;

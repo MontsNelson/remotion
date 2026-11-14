@@ -1,23 +1,41 @@
 # Faceless Studio
 
-One [Remotion](https://www.remotion.dev) project that makes the videos for
-three faceless channels, each with its own template, colours and AI voice:
+Makes the posts for three faceless channels and saves them, ready to schedule,
+into Google Drive. Two engines work together:
 
-| Channel           | What it posts                        | Template       | Voice                        |
-| ----------------- | ------------------------------------ | -------------- | ---------------------------- |
-| **@FOOTYSMART10** | Animated football tactics explainers | `TacticsReel`  | British male (`bm_george`)   |
-| **GTA 6 news**    | Countdown and news clips             | `GtaCountdown` | American male (`am_fenrir`)  |
-| **Multiverse**    | AI parody "what if" recasts          | `RecastReel`   | American female (`af_heart`) |
+- **Python factory** (`make.py`, `factory/`): carousels for both accounts, Vice
+  City Corner reels from Rockstar stills, AI voiceover (Kokoro), word-by-word
+  captions, original music, Drive folders, captions, schedules and logs.
+- **Remotion** (`src/`): the animated Footy Smart tactics reels.
 
-Every template renders as a Reel (1080x1920) and as a feed post (1080x1350).
-The plan for running all three is in **[PLAN.md](./PLAN.md)**.
+| Account | What it posts | Voice |
+| --- | --- | --- |
+| **Vice City Corner** @vicecitycorner6 | GTA 6 news carousels + reels | American male (`am_fenrir`) |
+| **Footy Smart** @footysmart10 | Tactics-board carousels + animated reels | British male (`bm_george`) |
+| **AI Studio** @ms_ai_studio26 | AI parody "multiverse" recasts (made by hand) | American female (`af_heart`) |
+
+- **Set up on the PC:** paste `SETUP_PC.md` into Claude Code.
+- **Daily autopilot:** `tasks/DAILY_TASK.md` (runs at 07:00 via Task Scheduler).
+- **Rules for every run:** `CLAUDE.md`. **Your Sunday steps:** `docs/POSTING_GUIDE.txt`.
+- **The bigger plan:** `PLAN.md`.
+
+## The factory by hand
+
+```bash
+python make.py --help
+python make.py plan content/plans/2026-11-14_launch-fortnight.json   # render a whole plan into Drive
+python make.py check "<Drive>/Faceless Accounts/Footy/02 Ready Posts"  # QA + contact sheets
+python make.py carousel my-carousel.json      # one-off renders into work/out/
+python make.py reel my-gta-reel.json
+python make.py footy-reel content/examples/footy-reel-high-press.json
+```
 
 ## Run it
 
 ```bash
 npm install
 npm start                        # Remotion Studio: preview every video live
-pip install -r scripts/requirements.txt   # once, for the voiceover
+pip install -r requirements.txt   # once, for the voiceover
 ```
 
 ## Make a video

@@ -1,0 +1,59 @@
+POSTING GUIDE (one page)
+========================
+
+WHAT YOU GET
+- Every morning the PC makes the day's posts and saves them in Google Drive:
+  Faceless Accounts / <account> / 02 Ready Posts / <week> / <day> / <time>_<type>_<name>
+- Each post folder has the images (1.jpg, 2.jpg...) or reel.mp4 + cover.jpg,
+  and caption.txt with everything you need, in the order you paste it.
+- THIS_WEEK_BOTH_ACCOUNTS.txt (top of Faceless Accounts) lists every post for
+  both accounts, sorted by day and time. Use it as your Sunday checklist.
+
+ONE-TIME SET-UP
+1. In the Instagram app, for each account: Settings > Account type and tools >
+   Switch to professional account > Creator (Vice City Corner: category
+   "Video game"; Footy Smart: "Sports").
+2. Link each Instagram account to a Facebook Page you manage (one Page each,
+   or both to one Page). In Instagram: Edit profile > Page > Connect.
+3. On your PC go to business.facebook.com and check both Instagram accounts
+   appear (top left account switcher).
+
+SUNDAY (about 30 minutes)
+1. Open THIS_WEEK_BOTH_ACCOUNTS.txt and each account's WEEK_SCHEDULE.txt.
+   Read any SWAP notes at the top first.
+2. In Meta Business Suite pick the account (top left switcher), then Planner
+   (or Content > Create post / Create reel). Menu names change now and then:
+   look for "Create post", "Create reel" and "Schedule".
+3. CAROUSEL: Create post > tick Instagram only > Add photo/video > select
+   1.jpg, 2.jpg... in order > paste the CAPTION block, then a blank line and
+   the HASHTAGS line > Schedule > set the POST AT date and time > Schedule.
+4. REEL: Create reel > upload reel.mp4 > set cover.jpg as the cover (Cover >
+   Upload image) > paste CAPTION + HASHTAGS > Schedule at POST AT.
+5. Tick the Status box in WEEK_SCHEDULE.txt as you go.
+6. Switch account (top left) and repeat for the other one.
+
+AFTER EACH POST GOES LIVE (phone, 2 minutes)
+- Post the FIRST COMMENT from caption.txt and pin it.
+- Share the post to your Story using the STORY IDEA (poll/quiz sticker).
+- Reply to comments in the first hour.
+- Carousels: Instagram can't schedule music on photo posts from Business Suite.
+  If you want music, add it in the app using the MUSIC mood in caption.txt.
+
+BREAKING POSTS
+- If the PC notification says BREAKING, open the BREAKING folder, post that
+  folder from your phone straight away, then delete or move the scheduled post
+  named in the SWAP note (Business Suite > Planner > the post > Edit/Delete).
+
+BEFORE EVERY POST
+- Read CHECK BEFORE POSTING in caption.txt. It flags anything that could change
+  (prices, times, rumours). If in doubt, leave it out.
+
+STATS (Sunday, 10 minutes)
+- In Instagram Insights, copy each post's reach, likes, comments, saves, shares
+  and follows into stats.csv in that account's 02 Ready Posts folder. The Sunday
+  run reads it and plans more of what works.
+
+LATER (OPTIONAL): FULL AUTO-POSTING
+- Possible through the Instagram Graph API (Content Publishing). It needs a Meta
+  developer app, the Facebook Page link above, an access token and app review.
+  Not set up; ask Claude if you want it.

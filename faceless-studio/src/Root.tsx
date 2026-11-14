@@ -22,8 +22,16 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
-          calculateMetadata={() => ({
-            durationInFrames: Math.round(scene.durationInSeconds * 30),
+          defaultProps={{
+            tactic: null,
+            voiceover: null,
+            captions: null,
+            musicFile: null,
+          }}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.round(
+              (props.tactic ?? scene).durationInSeconds * 30,
+            ),
           })}
         />
         <Composition
@@ -33,8 +41,16 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1350}
-          calculateMetadata={() => ({
-            durationInFrames: Math.round(scene.durationInSeconds * 30),
+          defaultProps={{
+            tactic: null,
+            voiceover: null,
+            captions: null,
+            musicFile: null,
+          }}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: Math.round(
+              (props.tactic ?? scene).durationInSeconds * 30,
+            ),
           })}
         />
       </Folder>

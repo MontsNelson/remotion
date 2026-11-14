@@ -6,6 +6,7 @@
 import type React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import type { PlayerData } from "../data/scene";
+import { useScene } from "../data/sceneContext";
 import { pointAt } from "../lib/keyframes";
 import { metresToPx, toPx } from "../lib/pitch";
 import { useLayout } from "../lib/hooks";
@@ -25,6 +26,7 @@ export const Player: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const layout = useLayout();
+  const scene = useScene();
 
   const enterFrame = Math.round(enterAt * fps);
   if (frame < enterFrame) {
@@ -34,7 +36,7 @@ export const Player: React.FC<{
   // Where is the player right now? First keyframe is the start position.
   const keyframes = [{ t: 0, ...player.start }, ...(player.moves ?? [])];
   const pos = toPx(pointAt(keyframes, frame / fps), layout);
-  const size = metresToPx(PLAYER_SIZE_M, layout);
+  const size = metresToPx(scene.playerSizeM ?? PLAYER_SIZE_M, layout);
 
   // Entrance: springs from off its spot into place.
   const entrance = spring({

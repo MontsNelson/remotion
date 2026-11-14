@@ -1,5 +1,9 @@
 # The plan: running three faceless channels with AI
 
+> **Update 14 Nov:** the daily autopilot (`tasks/DAILY_TASK.md`, `SETUP_PC.md`) now runs
+> Vice City Corner and Footy Smart from Monty's PC; the multiverse channel is **AI Studio**
+> (@ms_ai_studio26) and is made by hand with Higgsfield.
+
 Written 13 November 2026. GTA 6 launches on Thursday 19 November, so the
 GTA channel comes first this week.
 
@@ -193,7 +197,7 @@ TikTok and YouTube Studio both have built-in scheduling on desktop.
 - [ ] Turn on the AI label when posting multiverse videos.
 - [ ] Two-factor login on every account.
 - [x] Handles in the data files: @FOOTYSMART10 and @VICECITYCORNER6.
-- [ ] Multiverse handle (`@YOURMULTIVERSEHANDLE` is still a placeholder).
+- [x] AI Studio handle: @ms_ai_studio26 (first three episodes in `docs/ai-studio-episodes.md`).
 
 ## 8. What to measure
 

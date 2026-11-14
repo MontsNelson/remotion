@@ -19,7 +19,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { scene } from "./data/scene";
+import { scene as defaultScene, type SceneData } from "./data/scene";
+import { SceneContext, useScene } from "./data/sceneContext";
 import { theme } from "./lib/theme";
 import { inter } from "../shared/fonts";
 import { Camera } from "./components/Camera";
@@ -34,8 +35,11 @@ import { Caption } from "./components/Caption";
 import { Headline } from "./components/Headline";
 import { Outro } from "./components/Outro";
 import { Music } from "./components/Music";
-import { Voiceover } from "../shared/Voiceover";
-import voiceover from "./data/voiceover.json";
+import { Voiceover, type VoiceoverScript } from "../shared/Voiceover";
+import { WordCaptions, type CaptionWord } from "../shared/WordCaptions";
+import { getLayout } from "./lib/pitch";
+import defaultVoiceover from "./data/voiceover.json";
+import defaultTimings from "./data/voiceover-timings.json";
 
 /** The pitch fades in behind the hook headline. */
 const PitchFadeIn: React.FC<{ readonly children: React.ReactNode }> = ({
@@ -43,6 +47,7 @@ const PitchFadeIn: React.FC<{ readonly children: React.ReactNode }> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const scene = useScene();
   return (
     <AbsoluteFill
       style={{
@@ -62,8 +67,45 @@ const PitchFadeIn: React.FC<{ readonly children: React.ReactNode }> = ({
   );
 };
 
-export const TacticsReel: React.FC = () => {
-  const { fps } = useVideoConfig();
+export type TacticsReelProps = {
+  /** A tactic in the same shape as scene.ts, or null for the built-in one. */
+  tactic: SceneData | null;
+  /** Narration script (clips in public/<outputFolder>/) with each clip's
+   *  length in seconds, or null for the default high press narration. */
+  voiceover: (VoiceoverScript & { durations: Record<string, number> }) | null;
+  /** Word-by-word caption timings, or null for none. */
+  captions: CaptionWord[] | null;
+  /** Music file inside public/ (made by factory/music.py), or null for none. */
+  musicFile: string | null;
+};
+
+export const TacticsReel: React.FC<TacticsReelProps> = (props) => {
+  const scene = props.tactic ?? defaultScene;
+  return (
+    <SceneContext.Provider value={scene}>
+      <TacticsReelInner {...props} scene={scene} />
+    </SceneContext.Provider>
+  );
+};
+
+const TacticsReelInner: React.FC<TacticsReelProps & { scene: SceneData }> = ({
+  scene,
+  voiceover,
+  captions,
+  musicFile,
+}) => {
+  const { fps, width, height } = useVideoConfig();
+  const layout = getLayout(width, height);
+  const script = voiceover ?? defaultVoiceover;
+  const timings: Record<string, number> = voiceover
+    ? voiceover.durations
+    : defaultTimings;
+  const speaking = scene.voiceover.enabled
+    ? script.lines.map((line) => ({
+        from: line.at,
+        to: line.at + (timings[line.id] ?? 0),
+      }))
+    : [];
 
   const hook = scene.phases[0];
   const outro = scene.phases[scene.phases.length - 1];
@@ -168,10 +210,21 @@ export const TacticsReel: React.FC = () => {
         />
       </Sequence>
 
-      {scene.voiceover.enabled ? (
-        <Voiceover script={voiceover} volume={scene.voiceover.volume} />
+      {captions ? (
+        <WordCaptions
+          words={captions}
+          centreY={layout.height - layout.safeBottom + 60 * layout.fontScale}
+        />
       ) : null}
-      <Music />
+
+      {scene.voiceover.enabled ? (
+        <Voiceover script={script} volume={scene.voiceover.volume} />
+      ) : null}
+      <Music
+        file={musicFile ?? (scene.music.enabled ? scene.music.file : null)}
+        volume={scene.music.volume}
+        speaking={speaking}
+      />
     </AbsoluteFill>
   );
 };

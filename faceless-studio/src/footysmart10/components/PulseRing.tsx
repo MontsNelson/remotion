@@ -3,7 +3,8 @@
  * The rings follow the player, so they use the same keyframes as Player.
  */
 import type React from "react";
-import { scene, type HighlightData } from "../data/scene";
+import type { HighlightData } from "../data/scene";
+import { useScene } from "../data/sceneContext";
 import { pointAt, windowOpacity } from "../lib/keyframes";
 import { metresToPx, toPx } from "../lib/pitch";
 import { useLayout, useSeconds } from "../lib/hooks";
@@ -14,6 +15,7 @@ import { PLAYER_SIZE_M } from "./Player";
 export const PulseRing: React.FC<{ readonly highlight: HighlightData }> = ({
   highlight,
 }) => {
+  const scene = useScene();
   const t = useSeconds();
   const layout = useLayout();
 
@@ -30,7 +32,7 @@ export const PulseRing: React.FC<{ readonly highlight: HighlightData }> = ({
 
   const keyframes = [{ t: 0, ...player.start }, ...(player.moves ?? [])];
   const pos = toPx(pointAt(keyframes, t), layout);
-  const base = metresToPx(PLAYER_SIZE_M, layout) / 2;
+  const base = metresToPx(scene.playerSizeM ?? PLAYER_SIZE_M, layout) / 2;
 
   // Two rings, half a cycle apart. Each grows from the circle edge outward
   // and fades as it grows. One cycle takes a second.

@@ -109,6 +109,10 @@ export const scene = {
   /** The second the 22 players start sliding into position. */
   playersEnterAt: 3.3,
 
+  /** Diameter of a player dot in metres. Use a smaller value (about 2.6)
+   *  for zoomed-in set pieces where players stand close together. */
+  playerSizeM: 4.6,
+
   /** Small rounded pill shown above the headline. */
   tag: "TACTICS, EXPLAINED",
 

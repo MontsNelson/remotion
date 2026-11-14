@@ -9,7 +9,7 @@
  */
 import type React from "react";
 import { AbsoluteFill } from "remotion";
-import { scene } from "../data/scene";
+import { useScene } from "../data/sceneContext";
 import { cameraAt } from "../lib/keyframes";
 import { toPx } from "../lib/pitch";
 import { useLayout, useSeconds } from "../lib/hooks";
@@ -17,6 +17,7 @@ import { useLayout, useSeconds } from "../lib/hooks";
 export const Camera: React.FC<{ readonly children: React.ReactNode }> = ({
   children,
 }) => {
+  const scene = useScene();
   const layout = useLayout();
   const t = useSeconds();
   const cam = cameraAt(scene.camera, t);

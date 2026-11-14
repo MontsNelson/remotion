@@ -1,38 +1,30 @@
 /**
- * Optional background music. Only plays when scene.music.enabled is true
- * AND you have put the file in the public/ folder.
- *
- * Volume: fades in over 1.5 s and out over the last 2 s, and dips
- * ("ducks") to a quarter while the voiceover is speaking so the
- * narration is always easy to hear.
+ * Background music: original tracks made by factory/music.py (no copyright).
+ * Fades in over 1.5 s and out over the last 2 s, and dips ("ducks") to a
+ * quarter whenever the voiceover is speaking so the narration stays clear.
  */
 import type React from "react";
 import { Audio } from "@remotion/media";
 import { interpolate, staticFile, useVideoConfig } from "remotion";
-import { scene } from "../data/scene";
-import voiceover from "../data/voiceover.json";
-import timings from "../data/voiceover-timings.json";
 
 const DUCKED = 0.25;
 const RAMP_SECONDS = 0.25;
 
-export const Music: React.FC = () => {
+export const Music: React.FC<{
+  /** File inside public/, or null for no music. */
+  readonly file: string | null;
+  readonly volume: number;
+  /** When the narrator is speaking, in seconds. */
+  readonly speaking: { from: number; to: number }[];
+}> = ({ file, volume, speaking }) => {
   const { fps, durationInFrames } = useVideoConfig();
-  if (!scene.music.enabled) {
+  if (file === null) {
     return null;
   }
-
-  const speaking = scene.voiceover.enabled
-    ? voiceover.lines.map((line) => ({
-        from: line.at,
-        to: line.at + (timings[line.id as keyof typeof timings] ?? 0),
-      }))
-    : [];
-
   return (
     <Audio
       name="Music"
-      src={staticFile(scene.music.file)}
+      src={staticFile(file)}
       volume={(frame) => {
         const t = frame / fps;
         const fade = interpolate(
@@ -41,7 +33,6 @@ export const Music: React.FC = () => {
           [0, 1, 1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
         );
-        // 1 when nobody is talking, DUCKED while a line plays, smooth ramps.
         const duck = Math.min(
           1,
           ...speaking.map((s) =>
@@ -53,7 +44,7 @@ export const Music: React.FC = () => {
             ),
           ),
         );
-        return scene.music.volume * fade * duck;
+        return volume * fade * duck;
       }}
     />
   );

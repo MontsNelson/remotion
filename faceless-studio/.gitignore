@@ -9,3 +9,14 @@ out
 # Voice model downloaded by scripts/voiceover.py
 .voice-model
 __pycache__
+
+# Factory: machine settings, renders and Rockstar screenshots (never commit these)
+settings.json
+work/
+logs/
+drive-preview/
+library/*
+!library/README.txt
+public/music/
+public/voiceover/footy-*/
+*.pyc

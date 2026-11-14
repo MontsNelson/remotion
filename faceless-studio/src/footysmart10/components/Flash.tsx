@@ -1,12 +1,13 @@
 /** A quick white burst at the goal when the ball crosses the line. */
 import type React from "react";
 import { interpolate } from "remotion";
-import { scene } from "../data/scene";
+import { useScene } from "../data/sceneContext";
 import { metresToPx, toPx } from "../lib/pitch";
 import { useLayout, useSeconds } from "../lib/hooks";
 import { FrameSvg } from "../../shared/FrameSvg";
 
 export const Flash: React.FC = () => {
+  const scene = useScene();
   const t = useSeconds();
   const layout = useLayout();
   const { t: at, at: where } = scene.goal;

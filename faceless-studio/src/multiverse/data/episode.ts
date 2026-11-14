@@ -29,7 +29,7 @@ export type Shot = {
 };
 
 export const episode = {
-  handle: "@YOURMULTIVERSEHANDLE",
+  handle: "@MS_AI_STUDIO26",
   badge: "AI PARODY",
 
   hook: {

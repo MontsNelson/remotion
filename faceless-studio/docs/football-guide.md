@@ -45,7 +45,7 @@ The narration is a separate small file so the voice generator can read it.
 3. Run the generator:
 
    ```bash
-   pip install -r scripts/requirements.txt   # once
+   pip install -r requirements.txt   # once
    python scripts/voiceover.py src/footysmart10/data/voiceover.json
    ```
 

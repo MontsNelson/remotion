@@ -22,7 +22,7 @@ What it does, in plain English:
   3. It writes each clip's length to <script name>-timings.json next to the
      script, and warns you if a line runs into the next one or past the end.
 
-Setup (once):  pip install -r scripts/requirements.txt
+Setup (once):  pip install -r requirements.txt
 """
 
 import glob
