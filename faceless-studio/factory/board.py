@@ -17,6 +17,8 @@ A board description (JSON) looks like:
              {"kind": "pass", "points": [[x,y],[x2,y2]]}],
   "zones": [{"points": [[x,y],...], "label": "TRAP ZONE"}],
   "highlight": {"team": "a", "n": 7},  # pulsing-ring style highlight
+  "colours": {"a": "#EF0107", "num_a": "#FFFFFF", "b": "#6CABDD", "num_b": "#1C2C5B"},  # optional club colours
+  # any player can have "name": "Rice" to show a label under the dot
   "cuts": [[x, y]]                    # red X where a lane is blocked
 }
 """
@@ -185,7 +187,10 @@ def draw_board(img, box, spec: dict):
         d.line([(cx - r, cy + r), (cx + r, cy - r)], fill=RED, width=lw + 2)
     radius = b.m(spec.get("dot_size", 2.3))
     hl = spec.get("highlight") or {}
-    for team_key, colour, num_colour in (("team_b", TEAM_B, WHITE), ("team_a", TEAM_A, "#0B0F0C")):
+    cols = spec.get("colours") or {}
+    teams = (("team_b", cols.get("b", TEAM_B), cols.get("num_b", WHITE)),
+             ("team_a", cols.get("a", TEAM_A), cols.get("num_a", "#0B0F0C")))
+    for team_key, colour, num_colour in teams:
         for pl in spec.get(team_key, []):
             px, py = b.p(pl["x"], pl["y"])
             if hl and hl.get("team") == team_key[-1] and hl.get("n") == pl.get("n"):
@@ -197,6 +202,9 @@ def draw_board(img, box, spec: dict):
                       outline=(255, 255, 255, 235), width=max(2, int(radius * 0.12)))
             if pl.get("n") is not None:
                 d.text((px, py + 1), str(pl["n"]), font=font(radius * 1.05, "head"), fill=num_colour, anchor="mm")
+            if pl.get("name"):
+                d.text((px, py + radius * 1.25), pl["name"].upper(), font=font(radius * 0.95, "tag"), fill=WHITE,
+                       anchor="mt", stroke_width=3, stroke_fill=(0, 0, 0))
     if spec.get("ball"):
         bxm, bym = spec["ball"]["x"], spec["ball"]["y"]
         # a ball on top of a player sits at their feet instead of hiding the number

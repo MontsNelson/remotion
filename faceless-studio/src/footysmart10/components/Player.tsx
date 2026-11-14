@@ -46,8 +46,21 @@ export const Player: React.FC<{
   });
   const slide = (enterFrom === "top" ? -1 : 1) * layout.height * 0.18;
 
-  const color = team === "A" ? theme.teamA : theme.teamB;
-  const numberColor = team === "A" ? theme.ink : theme.text;
+  const colours = scene.colours;
+  const color = colours
+    ? team === "A"
+      ? colours.A
+      : colours.B
+    : team === "A"
+      ? theme.teamA
+      : theme.teamB;
+  const numberColor = colours
+    ? team === "A"
+      ? colours.numberA
+      : colours.numberB
+    : team === "A"
+      ? theme.ink
+      : theme.text;
 
   return (
     <div
@@ -77,6 +90,26 @@ export const Player: React.FC<{
       }}
     >
       {player.number}
+      {player.name ? (
+        <div
+          style={{
+            position: "absolute",
+            top: size * 1.02,
+            left: "50%",
+            translate: "-50% 0px",
+            whiteSpace: "nowrap",
+            fontFamily: inter,
+            fontWeight: 800,
+            fontSize: Math.max(18, size * 0.36),
+            letterSpacing: 1,
+            color: "#FFFFFF",
+            textTransform: "uppercase",
+            textShadow: "0 2px 6px rgba(0,0,0,0.95), 0 0 2px #000",
+          }}
+        >
+          {player.name}
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -36,6 +36,16 @@ export type PlayerData = {
    * Repeat a position with a later `t` to make the player wait there.
    */
   moves?: Keyframe[];
+  /** Optional name shown under the dot (key players only). */
+  name?: string;
+};
+
+/** Dot colours per team, e.g. to hint at the clubs in a real example. */
+export type TeamColours = {
+  A: string;
+  B: string;
+  numberA: string;
+  numberB: string;
 };
 
 export type TeamData = {
@@ -112,6 +122,9 @@ export const scene = {
   /** Diameter of a player dot in metres. Use a smaller value (about 2.6)
    *  for zoomed-in set pieces where players stand close together. */
   playerSizeM: 4.6,
+
+  /** Team colours, or null for the brand colours (lime v red). */
+  colours: null as TeamColours | null,
 
   /** Small rounded pill shown above the headline. */
   tag: "TACTICS, EXPLAINED",

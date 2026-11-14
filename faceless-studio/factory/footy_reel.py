@@ -43,6 +43,7 @@ def _browser_args():
 
 
 def render(spec: dict, out_dir: Path, work_dir: Path, slug: str, composition="TacticsReel"):
+    """Renders reel.mp4 + cover.jpg, and reel-feed.mp4 (4:5) too when spec has "feed": true."""
     acct = config.account(spec.get("account", "footy"))
     tactic = spec["tactic"]
     length = float(tactic["durationInSeconds"])
@@ -97,6 +98,15 @@ def render(spec: dict, out_dir: Path, work_dir: Path, slug: str, composition="Ta
     tmp_audio = work_dir / "audio.wav"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw), "-vn", str(tmp_audio)], check=True)
     mux(raw, tmp_audio, out_dir / "reel.mp4")
+    if spec.get("feed"):
+        raw_feed = work_dir / "raw-feed.mp4"
+        r = subprocess.run([_npx(), "remotion", "render", "src/index.ts", "TacticsReelFeed", str(raw_feed),
+                            f"--props={props_path}", "--log=error", *_browser_args()], cwd=ROOT, shell=shell)
+        if r.returncode != 0:
+            raise SystemExit("Remotion render (feed version) failed")
+        feed_audio = work_dir / "audio-feed.wav"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw_feed), "-vn", str(feed_audio)], check=True)
+        mux(raw_feed, feed_audio, out_dir / "reel-feed.mp4")
     cover_frame = int(min(2.6, length / 2) * 30)
     subprocess.run([_npx(), "remotion", "still", "src/index.ts", composition, str(out_dir / "cover.jpg"),
                     f"--props={props_path}", f"--frame={cover_frame}", "--image-format=jpeg",
